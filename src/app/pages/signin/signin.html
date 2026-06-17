@@ -1,0 +1,61 @@
+<div class="signin-container flex flex-col items-center justify-center h-full gap-y-4">
+    <div class="signin-title flex items-center gap-x-2">
+        <app-icon-svg iconName="logo" width="28" height="28" color="var(--ring)"></app-icon-svg>
+        <span class="text-lg font-semibold">Naelytics</span>
+    </div>
+    <p class="signin-subtitle text-sm">Simple, privacy-friendly analytics</p>
+    <div class="signin-card rounded-xl p-4">
+        <div class="signin-desc mb-6 space-y-1.5 text-center pt-6">
+            <h1 class="text-xl font-semibold">Bon retour parmi nous</h1>
+            <p class="text-sm">Connectez-vous à votre tableau de bord Naelytics</p>
+        </div>
+        <form [formGroup]="signinForm" (ngSubmit)="onSubmit(signinForm)" class="signin-form flex flex-col gap-4 w-full">
+            <div class="flex flex-col gap-1">
+                <label class="font-medium text-sm" for="email">Email</label>
+                <input 
+                pInputText
+                fluid
+                type="email"
+                id="email"
+                placeholder="you@gmail.com"
+                formControlName="email"
+                [invalid]="isInvalid('email')" />
+                @if (signinForm.controls.email.touched && signinForm.controls.email.invalid) {
+                <p class="error-message text-red-400">
+                    {{ getErrorMessage('email') }}
+                </p>
+                }
+            </div>
+            <div class="flex flex-col gap-1">
+                <div class="flex items-center justify-between">
+                    <label class="font-medium text-sm" for="password">Mot de passe</label>
+                    <span (click)="forgotPassword()" class="forgot-password text-xs">Mot de passe oublié ?</span>
+                </div>
+                <p-password 
+                fluid
+                formControlName="password"
+                [toggleMask]="true"
+                promptLabel="Choisissez un mot de passe" 
+                weakLabel="Faible"
+                mediumLabel="Moyen" 
+                strongLabel="Fort"
+                autocomplete="off"
+                [invalid]="isInvalid('password')"/>
+                @if (signinForm.controls.password.touched && signinForm.controls.password.invalid) {
+                <p class="error-message text-red-400">
+                    {{ getErrorMessage('password') }}
+                </p>
+                }
+            </div>
+            <button 
+            pButton 
+            severity="secondary" 
+            type="submit"
+            class="font-medium py-2"
+            ><span pButtonLabel>Se connecter</span></button>
+        </form>
+    </div>
+    <div class="signup text-sm">
+        Vous n'avez pas encore de compte ? <a href="#" class="signup-link font-medium">Créez-en un</a>
+    </div>
+</div>

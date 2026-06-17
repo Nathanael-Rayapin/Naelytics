@@ -1,0 +1,60 @@
+:host {
+    flex: 1;
+}
+
+.signin-container {
+    .signin-title span {
+        color: var(--foreground);
+    }
+
+    p.signin-subtitle {
+        color: var(--muted-foreground);
+    }
+
+    .signin-card {
+        width: 384px;
+        background-color: var(--card);
+        box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+
+        .signin-desc p {
+            color: var(--muted-foreground);
+        }
+
+        .signin-form {
+            .forgot-password {
+                color: var(--muted-foreground);
+                cursor: pointer;
+
+                &:hover {
+                    text-decoration: underline;
+                }
+            }
+
+            button[type="submit"] {
+                background-color: var(--primary);
+                border-radius: 12px;
+                color: var(--primary-foreground);
+                cursor: pointer;
+                transition: background-color 0.3s ease;
+
+                &:hover {
+                    background-color: var(--accent-foreground);
+                }
+            }
+        }
+    }
+
+    .signup {
+        color: var(--muted-foreground);
+
+        .signup-link {
+            color: var(--primary);
+            cursor: pointer;
+
+            &:hover {
+                text-decoration: underline;
+            }
+        }
+    }
+
+}
