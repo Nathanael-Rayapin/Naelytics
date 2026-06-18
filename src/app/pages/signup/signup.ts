@@ -3,11 +3,15 @@ import { ReactiveFormsModule, FormBuilder, FormGroup, FormControl, Validators } 
 import { InputTextModule } from 'primeng/inputtext';
 import { MessageModule } from 'primeng/message';
 import { PasswordModule } from 'primeng/password';
+import { ButtonModule } from 'primeng/button';
 import { IconSvg } from '../../components/icon-svg/icon-svg';
 import { ErrorPriorityType } from '../../shared/error-priority-type';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { errorMessages } from './data/signup.data';
-import { ISignupForm } from './signup.interface';
+import { ISignup, ISignupForm } from './signup.interface';
+import { AuthService } from '../../services/auth.service';
+import { ToastService } from '../../services/toast.service';
+import { STRONG_PASSWORD_REGEX } from '../../shared/constants';
 
 @Component({
   selector: 'app-signup',
@@ -17,19 +21,26 @@ import { ISignupForm } from './signup.interface';
     MessageModule,
     ReactiveFormsModule,
     InputTextModule,
-    PasswordModule
+    PasswordModule,
+    ButtonModule
   ],
   templateUrl: './signup.html',
   styleUrl: './signup.css',
 })
 export class Signup {
   private fb = inject(FormBuilder);
+  private router = inject(Router);
+  private authService = inject(AuthService);
+  private toastService = inject(ToastService);
 
   protected readonly errorPriority: ErrorPriorityType[] = ['required', 'invalidEmail', 'mismatchPassword'];
 
   protected readonly errorMessages = errorMessages;
 
   formSubmitted = signal(false);
+  isPending = signal(false);
+
+  public STRONG_PASSWORD_REGEX = STRONG_PASSWORD_REGEX;
 
   signupForm: FormGroup<ISignupForm> = this.fb.group<ISignupForm>({
     email: new FormControl(null, [Validators.required, Validators.email]),
@@ -40,12 +51,27 @@ export class Signup {
   onSubmit(form: FormGroup<ISignupForm>) {
     this.formSubmitted.set(true);
 
-    if (this.signupForm.invalid) {
+    if (form.invalid) {
       this.signupForm.markAllAsTouched();
       return;
     }
 
-    console.log(form.value);
+    this.isPending.set(true);
+    this.authService.signup(form.value as ISignup).subscribe({
+      next: () => {
+        this.toastService.success("Compte Naelytics créé avec succès");
+        this.router.navigate(['/signin']);
+      },
+      error: (error) => {
+        this.toastService.error("Une erreur est survenue lors de la création du compte: " + error.message);
+        this.isPending.set(false);
+      },
+      complete: () => {
+        this.formSubmitted.set(false);
+        this.isPending.set(false);
+        this.signupForm.reset();
+      }
+    });
   }
 
   getErrorMessage(fieldName: keyof ISignupForm): string {

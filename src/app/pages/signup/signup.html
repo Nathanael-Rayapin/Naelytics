@@ -32,7 +32,8 @@
                 fluid
                 formControlName="password"
                 [toggleMask]="true"
-                promptLabel="Choisissez un mot de passe" 
+                promptLabel="Choisissez un mot de passe"
+                [strongRegex]="STRONG_PASSWORD_REGEX"
                 weakLabel="Faible"
                 mediumLabel="Moyen" 
                 strongLabel="Fort"
@@ -65,11 +66,12 @@
                 }
             </div>
             <button 
-            pButton 
+            pButton
+            [loading]="isPending()"
             severity="secondary" 
             type="submit"
             class="font-medium py-2"
-            ><span pButtonLabel>S'inscrire'</span></button>
+            ><span pButtonLabel>S'inscrire</span></button>
         </form>
     </div>
     <div class="signin text-sm">
