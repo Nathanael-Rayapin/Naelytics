@@ -1,2 +1,4 @@
 export type ErrorPriorityType = 
-| 'required';
+| 'required'
+| 'invalidEmail'
+| 'mismatchPassword';

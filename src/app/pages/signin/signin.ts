@@ -7,17 +7,25 @@ import { MessageModule } from 'primeng/message';
 import { ErrorPriorityType } from '../../shared/error-priority-type';
 import { errorMessages } from './data/signin.data';
 import { PasswordModule } from 'primeng/password';
+import {RouterLink} from '@angular/router';
 
 @Component({
   selector: 'app-signin',
-  imports: [IconSvg, MessageModule, ReactiveFormsModule, InputTextModule, PasswordModule],
+  imports: [
+    RouterLink,
+    IconSvg,
+    MessageModule, 
+    ReactiveFormsModule, 
+    InputTextModule, 
+    PasswordModule
+  ],
   templateUrl: './signin.html',
   styleUrl: './signin.css',
 })
 export class Signin {
   private fb = inject(FormBuilder);
 
-  protected readonly errorPriority: ErrorPriorityType[] = ['required'];
+  protected readonly errorPriority: ErrorPriorityType[] = ['required', 'invalidEmail'];
 
   protected readonly errorMessages = errorMessages;
 

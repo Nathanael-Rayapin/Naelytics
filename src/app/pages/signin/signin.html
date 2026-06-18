@@ -12,7 +12,7 @@
         <form [formGroup]="signinForm" (ngSubmit)="onSubmit(signinForm)" class="signin-form flex flex-col gap-4 w-full">
             <div class="flex flex-col gap-1">
                 <label class="font-medium text-sm" for="email">Email</label>
-                <input 
+                <input
                 pInputText
                 fluid
                 type="email"
@@ -56,6 +56,6 @@
         </form>
     </div>
     <div class="signup text-sm">
-        Vous n'avez pas encore de compte ? <a href="#" class="signup-link font-medium">Créez-en un</a>
+        Vous n'avez pas encore de compte ? <a routerLink="/signup" class="signup-link font-medium">Créez-en un</a>
     </div>
 </div>
